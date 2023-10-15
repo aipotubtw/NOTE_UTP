@@ -3,3 +3,7 @@
 ## 预科
 
 [俄语](RUSSIAN/readme.md)
+
+## 大一
+
+[数学](MATH/readme.md)
