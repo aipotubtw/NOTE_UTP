@@ -2,7 +2,8 @@
 
 ## 预科
 
-[俄语](RUSSIAN/readme.md)
+[俄语](RUSSIAN/readme.md)  
+[Java](Java/readme.md)
 
 ## 大一
 
