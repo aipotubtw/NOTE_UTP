@@ -1,1 +1,1 @@
-# [shuxue](../readme.md)
+# [数学](../readme.md)
