@@ -733,4 +733,213 @@ for循环小括号中的初始化语句可以为空将其写在for循环外
 - for循环中：知道循环的次数或者循环的范围
 - while循环：不知道循环的次数和范围，只知道循环的结束条件  
 
-while循环，是当满足什么条件的时候，才做某种操作。 当条件不满足时，执行完循环体内全部语句后再跳出（而不是立即跳出循环）。 for循环，就是遍历某一对象，通俗说就是根据循环次数限制做多少次重复操作。 while循环，是当满足什么条件的时候，才做某种操作。
+while循环，是当满足什么条件的时候，才做某种操作。 当条件不满足时，执行完循环体内全部语句后再跳出（而不是立即跳出循环）。 for循环，就是遍历某一对象，通俗说就是根据循环次数限制做多少次重复操作。 while循环，是当满足什么条件的时候，才做某种操作。  
+
+### do...while循环  
+
+格式：
+
+```java
+初始化语句;
+do{
+    循环体;
+    条件控制语句;
+}while(条件判断语句);
+```
+
+特点：
+
+​	先执行，再判断。
+
+## 循环代码示例  
+
+ ### 一、
+
+要求  
+- 给出一个整数。  
+  若该整数为回文整数，打印true，否则，返回false(回文整数：形如12321)
+
+```java
+import java.util.Scanner;
+
+public class class5 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入一个整数");
+        int number = sc.nextInt();
+        int temp = number;//由于数值number在while循环内已变为0，故定义了一个变量temp以暂存number的数据，并在结尾以此数据对反转的数进行比较
+        int sum = 0;//定义一个变量记录反转后的数据
+        while(number > 0){//我们对number取余，当对最后一位取完余后必得到0，故我们可以将条件判断句设为number != 0或number > 0,因此循环就会一直重复至对最后一位取完余后再停止
+            int ge = number % 10;//对number取余得到number数据的个位数
+            number /= 10;//当我们得到一个数的个位数后，如1234得到4后，应再接连得到3，2，1，故在此将数据除10，将数据的最后一位数除去，以得到十位，百位，千位......
+            sum = sum * 10 + ge;//进行第一次循环时，得到sum=0 + 个位，第二次得到sum = 个位 * 10 + 十位，如此循环以记录反转的数据
+
+        }
+        System.out.println(sum == temp );
+    }
+}
+```  
+
+### 二、  
+
+要求  
+- 给出两个正整数，且不超过int的范围，不用乘、除、取余计算第一个数除第二个数的商和余  
+
+```java
+import java.util.Scanner;
+
+public class class1 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入第一个整数");
+        int num1 = sc.nextInt();
+        System.out.println("请输入第二个整数");
+        int num2 = sc.nextInt();
+        int sum = 0;
+        while (num2 <= num1) {
+            num1 = num1 - num2;
+            sum++;
+        }
+        System.out.println("商为：" + sum);
+        System.out.println("余数为：" + num1);
+    }
+}
+```  
+
+### 三、  
+
+逢7必过小游戏  
+
+```java
+public class class6 {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 100; i++) {
+            if(i / 10 % 10 == 7 || i % 10 == 7 || i % 7 == 0){
+                System.out.println("过");
+                continue;
+            }
+            System.out.println(i);
+        }
+    }
+}
+
+```  
+
+### 四、  
+
+不调用MATH类进行算数平方根(只保留整数部分）  
+
+```java
+import java.util.Scanner;
+
+public class class7 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入一个整数");
+        int num = sc.nextInt();
+        for (int i = 1; i <= num; i++) {
+            if(num == i * i){
+                System.out.println(i + "就是" + num + "的算数平方根");
+                break;
+            } else if (num <= i * i) {
+                System.out.println((i-1) + "就是" + num + "的算数平方根的整数部分");
+                break;
+            }
+        }
+    }
+}
+
+```  
+
+## 无限循环
+
+### 概念：
+
+​	又叫死循环。循环一直停不下来。
+
+### for格式：
+
+```java
+for(;;){
+    System.out.println("循环执行一直在打印内容");
+}
+```
+
+解释：
+
+初始化语句可以空着不写，表示循环之前不定义任何的控制变量。
+
+条件判断语句可以空着不写，如果不写，默认表示true，循环一直进行。
+
+条件控制语句可以空着不写，表示每次循环体执行完毕后，控制变量不做任何变化。
+
+### while格式：
+
+```java
+while(true){
+    System.out.println("循环执行一直在打印内容");
+}
+```
+
+解释：
+
+​	小括号里面就不能省略了，true一定要写出来，否则代码会报错。
+
+### do...while格式：
+
+```java
+do{
+    System.out.println("循环执行一直在打印内容");
+}while(true);
+```
+
+解释：
+
+​	小括号里面就不能省略了，true一定要写出来，否则代码会报错。
+
+### 无限循环的注意事项：
+
+* 最为常用的格式：while
+* 无限循环下面不能再写其他代码了，因为永远执行不到。
+
+## 2.条件控制语句
+
+* break
+* continue
+
+### break:
+
+​	不能单独存在的。可以用在switch和循环中，表示结束，跳出的意思。
+
+代码示例：
+
+```java
+//1.吃1~5号包子
+for (int i = 1; i <= 5; i++) {
+    System.out.println("在吃第" + i + "个包子");
+    //2.吃完第三个的时候就不吃了
+    if(i == 3){
+        break;//结束整个循环。
+    }
+}
+```
+
+### continue:
+
+​	不能单独存在的。只能存在于循环当中。
+
+​	表示：跳过本次循环，继续执行下次循环。
+
+代码示例：
+
+```java
+//1.吃1~5号包子
+for (int i = 1; i <= 5; i++) {
+    //2.第3个包子有虫子就跳过，继续吃下面的包子
+    if(i == 3){
+        //跳过本次循环（本次循环中，下面的代码就不执行了），继续执行下次循环。
+        continue;
+    }
+    System.out.println("在吃第" + i + "个包子");
+}
+```
