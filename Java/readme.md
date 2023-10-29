@@ -751,7 +751,7 @@ do{
 
 ​	先执行，再判断。
 
-## 循环代码示例  
+### 循环代码示例  
 
  ### 一、
 
@@ -851,13 +851,13 @@ public class class7 {
 
 ```  
 
-## 无限循环
+### 无限循环
 
-### 概念：
+**概念：**
 
 ​	又叫死循环。循环一直停不下来。
 
-### for格式：
+**for格式：**
 
 ```java
 for(;;){
@@ -873,7 +873,7 @@ for(;;){
 
 条件控制语句可以空着不写，表示每次循环体执行完毕后，控制变量不做任何变化。
 
-### while格式：
+**while格式：**
 
 ```java
 while(true){
@@ -885,7 +885,7 @@ while(true){
 
 ​	小括号里面就不能省略了，true一定要写出来，否则代码会报错。
 
-### do...while格式：
+**do...while格式：**
 
 ```java
 do{
@@ -897,12 +897,12 @@ do{
 
 ​	小括号里面就不能省略了，true一定要写出来，否则代码会报错。
 
-### 无限循环的注意事项：
+**无限循环的注意事项：**
 
 * 最为常用的格式：while
 * 无限循环下面不能再写其他代码了，因为永远执行不到。
 
-## 2.条件控制语句
+## 条件控制语句
 
 * break
 * continue
@@ -944,7 +944,7 @@ for (int i = 1; i <= 5; i++) {
 }
 ```  
 
-## 3. Random
+## Random
 
 Random跟Scanner一样，也是Java提前写好的类，我们不需要关心是如何实现的，只要直接使用就可以了。
 
@@ -1395,4 +1395,280 @@ for (int i = 0; i < arr.length; i++) {
 for (int i = 0; i < arr.length; i++) {
     System.out.print(arr[i] + " ");
 }
-```
+```  
+
+##  方法
+
+### 方法的概念
+
+​	方法（method）是程序中最小的执行单元
+
+* 注意：
+  * 方法必须先创建才可以使用，该过程成为方法定义
+  * 方法创建后并不是直接可以运行的，需要手动使用后，才执行，该过程成为方法调用
+
+### 方法的定义和调用
+
+**无参数方法定义和调用**
+
+* 定义格式：
+
+  ```java
+  public static void 方法名 (   ) {
+  	// 方法体;
+  }
+  ```
+
+
+
+* 调用格式：
+
+  ```java
+  方法名();
+  ```
+
+
+* 注意：
+
+  ​	方法必须先定义，后调用，否则程序将报错
+
+
+
+###  带参数方法定义和调用
+
+**带参数方法定义和调用**
+* 定义格式：
+
+  参数：由数据类型和变量名组成 -  数据类型 变量名
+
+  参数范例：int a
+
+  ```java
+  public static void 方法名 (参数1) {
+  	方法体;
+  }
+  
+  public static void 方法名 (参数1, 参数2, 参数3...) {
+  	方法体;
+  }
+  ```
+
+* 范例：
+
+  ```java
+  public static void isEvenNumber(int number){
+      ...
+  }
+  public static void getMax(int num1, int num2){
+      ...
+  }
+  ```
+
+  * 注意：
+
+  		方法定义时，参数中的数据类型与变量名都不能缺少，缺少任意一个程序将报错
+			
+  		方法定义时，多个参数之间使用逗号( ，)分隔
+
+* 调用格式：
+
+  ```java
+  方法名(参数)；
+  
+  方法名(参数1,参数2);
+  ```
+
+* 范例：
+
+  ```java
+  isEvenNumber(10);
+  
+  getMax(10,20);
+  ```
+
+  * 方法调用时，参数的数量与类型必须与方法定义中的设置相匹配，否则程序将报错 
+
+**形参和实参**
+
+1. 形参：方法定义中的参数
+
+​          等同于变量定义格式，例如：int number
+
+2. 实参：方法调用中的参数
+
+​          等同于使用变量或常量，例如： 10  number  
+
+### 带返回值方法的定义和调用
+
+**带返回值方法定义和调用**
+
+* 定义格式
+
+  ```java
+  public static 数据类型 方法名 ( 参数 ) { 
+  	return 数据 ;
+  }
+  ```
+
+* 范例
+
+  ```java
+  public static boolean isEvenNumber( int number ) {           
+  	return true ;
+  }
+  public static int getMax( int a, int b ) {
+  	return  100 ;
+  }
+  ```
+
+  * 注意：
+    * 方法定义时return后面的返回值与方法定义上的数据类型要匹配，否则程序将报错
+
+* 调用格式
+
+  ```java
+  方法名 ( 参数 ) ;
+  数据类型 变量名 = 方法名 ( 参数 ) ;
+  ```
+
+* 范例
+
+  ```java
+  isEvenNumber ( 5 ) ;
+  boolean  flag =  isEvenNumber ( 5 ); 
+  ```
+
+  * 注意：
+    * 方法的返回值通常会使用变量接收，否则该返回值将无意义
+
+
+
+###  方法的注意事项
+
+**方法的注意事项**
+
+* 方法不能嵌套定义
+
+  * 示例代码：
+
+    ```java
+    public class MethodDemo {
+        public static void main(String[] args) {
+    
+        }
+    
+        public static void methodOne() {
+    		public static void methodTwo() {
+           		// 这里会引发编译错误!!!
+        	}
+        }
+    }
+    ```
+
+* void表示无返回值，可以省略return，也可以单独的书写return，后面不加数据
+
+  * 示例代码：
+
+    ```java
+    public class MethodDemo {
+        public static void main(String[] args) {
+    
+        }
+        public static void methodTwo() {
+            //return 100; 编译错误，因为没有具体返回值类型
+            return;	
+            //System.out.println(100); return语句后面不能跟数据或代码
+        }
+    }
+    ```  
+
+### 方法重载
+
+**方法重载**
+
+* 方法重载概念
+
+  方法重载指同一个类中定义的多个方法之间的关系，满足下列条件的多个方法相互构成重载
+
+  * 多个方法在同一个类中
+  * 多个方法具有相同的方法名
+  * 多个方法的参数不相同，类型不同或者数量不同
+
+* 注意：
+
+  * 重载仅对应方法的定义，与方法的调用无关，调用方式参照标准格式
+  * 重载仅针对同一个类中方法的名称与参数进行识别，与返回值无关，换句话说不能通过返回值来判定两个方法是否相互构成重载
+
+* 正确范例：
+
+  ```java
+  public class MethodDemo {
+  	public static void fn(int a) {
+      	//方法体
+      }
+      public static int fn(double a) {
+      	//方法体
+      }
+  }
+  
+  public class MethodDemo {
+  	public static float fn(int a) {
+      	//方法体
+      }
+      public static int fn(int a , int b) {
+      	//方法体
+      }
+  }
+  ```
+
+
+
+**方法重载示例**
+
+* 需求：使用方法重载的思想，设计比较两个整数是否相同的方法，兼容全整数类型（byte,short,int,long） 
+
+* 思路：
+
+  * ①定义比较两个数字的是否相同的方法compare()方法，参数选择两个int型参数
+  * ②定义对应的重载方法，变更对应的参数类型，参数变更为两个long型参数
+  * ③定义所有的重载方法，两个byte类型与两个short类型参数 
+  * ④完成方法的调用，测试运行结果 
+
+* 代码：
+
+  ```java
+  public class MethodTest {
+      public static void main(String[] args) {
+          //调用方法
+          System.out.println(compare(10, 20));
+          System.out.println(compare((byte) 10, (byte) 20));
+          System.out.println(compare((short) 10, (short) 20));
+          System.out.println(compare(10L, 20L));
+      }
+  
+      //int
+      public static boolean compare(int a, int b) {
+          System.out.println("int");
+          return a == b;
+      }
+  
+      //byte
+      public static boolean compare(byte a, byte b) {
+          System.out.println("byte");
+          return a == b;
+      }
+  
+      //short
+      public static boolean compare(short a, short b) {
+          System.out.println("short");
+          return a == b;
+      }
+  
+      //long
+      public static boolean compare(long a, long b) {
+          System.out.println("long");
+          return a == b;
+      }
+  
+  }
+  ```
