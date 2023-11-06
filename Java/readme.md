@@ -1275,7 +1275,62 @@ public class ArrDemo6 {
 
     }
 }
-```
+```  
+
+### Java的内存分配  
+
+- `栈` 方法运行时使用的内存，比如main方法运行，进入方法栈中
+- `堆` 存储对象或数组（数组也是对象），new来创建的，都存储在堆内存
+- `方法区` 存储可以运行的class文件
+- `本地方法栈` JVM在使用操作系统功能的时候使用，和我们的开发无关
+- `寄存器` 给CPU使用，与我们的开发无关  
+
+**栈内存**  
+
+程序的主入口（main方法）开始执行时会进栈，代码执行完毕会出栈  
+
+**堆内存**  
+
+new出来的东西会在这块内存中开辟空间并产生地址（地址值），其存储在栈内存里的就是地址值     
+`两个数组指向同一个空间的内存图`当其中一个数组对空间的中的值发生了改变，那么其他数组再次访问的时候都是修改后的结果了  
+eg:  
+
+```java
+int[] arr1 ={1,2,3,4,5};
+int[] arr2 = arr;
+```  
+
+若此时有  
+
+```java
+arr2[0] =11;
+```  
+
+则有  
+
+```java
+arr1[0] = 11;
+arr2[0] = 11;
+```  
+
+**基本数据类型**  
+
+- 整数类型(byte,short,int,long)
+- 浮点数类型(float,double)
+- 布尔类型(boolean)
+- 字符类型(char)  
+
+**引用数据类型**  
+
+除基本数据类型外的其他所有类型  
+
+`基本数据类型` 数据存储在自己的空间中  
+特点：赋值给其他变量，也是赋的真实值  
+方法传递基本数据类型的内存原理：传递基本数据类型时，传递的是真实的数据，形参的改变，不影响实参的值  
+
+`引用数据类型` 数据时存储在其他空间中，自己空间中存储的是地址值  
+特点：赋值给其他变量，赋的地址值  
+方法传递引用数据类型的内存原理：传递引用数据类型时，传递的是地址值，形参的改变，影响实际参数的值  
 
 ### 数组的示例  
 
@@ -1671,4 +1726,558 @@ for (int i = 0; i < arr.length; i++) {
       }
   
   }
-  ```
+  ```  
+
+
+
+### 方法代码示例  
+
+**一、**  
+
+给定一个数组及一个数字，判断这个数字是否在数组内。  
+若在数组内返回true，若不在数组内返回false。  
+
+```java
+import java.util.Scanner;
+
+public class class9 {
+    public static void main(String[] args) {
+        int [] arr = {11,22,33,44,55,66};
+        boolean a = exits(arr);
+        System.out.println(a);
+    }
+    public static boolean exits(int [] arr){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入需要验证的数字：");
+        int num = sc.nextInt();
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] == num){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```  
+
+**二、**  
+
+给定一个数组，复制数组中其中一段数据给一个新的数组，用键盘输入复制的数据的范围，最后将数组以[ 1,2,3,4]的格式打印出来。  
+
+```java
+import java.util.Scanner;
+
+public class class10 {
+    public static void main(String[] args) {
+        int [] arr = {11,22,33,44,55,66,77,88,99,00};
+        int [] Arrary = copyOfRange(arr);
+        print(Arrary);
+    }
+    public static int [] copyOfRange(int[] arr){//复制数据给一个新数组的方法
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入索引起始值：");
+        int from = sc.nextInt();
+        System.out.println("请输入索引结束值：");
+        int to = sc.nextInt();
+        int [] arr2 = new int [to - from];
+        int i2 = 0;
+        for (int i = from; i < to; i++) {
+            arr2[i2] = arr[i];
+            i2++;
+        }
+        return arr2;
+    }
+    public static void print(int[]ARR){//打印新数组的方法
+        for (int i = 0; i < ARR.length; i++) {
+            if(i == 0){
+                System.out.print("[" + ARR[0] + ",");
+            } else if (i < ARR.length - 1) {
+                System.out.print(ARR[i] + ",");
+            }else {
+                System.out.print(ARR[ARR.length - 1] + "]");
+            }
+        }
+    }
+
+}
+
+```  
+
+**三、**  
+
+购买机票
+输入购买的机票的月份，舱位，原价，按需求打折  
+5，6，7，8，9，10旺季,头等舱(记录为0)打9折,经济舱（1）7折
+1，2，3，4，11，12淡季,头等舱(记录为0)打85折,经济舱（1）65折  
+
+```java
+import java.util.Scanner;
+
+public class class12 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入您购买的机票的原价：");
+        double price = sc.nextInt();
+        System.out.println("请输入您购买的机票的月份：");
+        int month = sc.nextInt();
+        System.out.println("请输入您购买的机票的舱位：");
+        int cabin = sc.nextInt();
+        if (month > 12 || month < 1) {
+            System.out.println("您输入的月份有误！");
+        } else if (cabin == 0) {
+            double finPrice = Month0(month, price);
+            System.out.println(finPrice);
+        } else if (cabin == 1) {
+            double finPrice = Month1(month, price);
+            System.out.println(finPrice);
+        } else {
+            System.out.println("您输的舱位有误！");
+        }
+    }
+
+    public static double Month0(int month, double price) {
+
+        switch (month) {
+            case 5, 6, 7, 8, 9, 10 -> price = price * 0.9;
+            case 1, 2, 3, 4, 11, 12 -> price = price * 0.7;
+        }
+        return price;
+    }
+
+    public static double Month1(int month, double price) {
+        switch (month) {
+            case 5, 6, 7, 8, 9, 10 -> price = price * 0.85;
+            case 1, 2, 3, 4, 11, 12 -> price = price * 0.65;
+        }
+        return price;
+    }
+}
+```  
+
+```java
+import java.util.Scanner;
+
+public class class13 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入您购买的机票的原价：");
+        double price = sc.nextDouble();
+        System.out.println("请输入您购买的的票的月份：");
+        int month = sc.nextInt();
+        System.out.println("请输入您购买的舱位");
+        int cabin = sc.nextInt();
+        if (month < 1 || month > 12) {
+            System.out.println("您输入的月份有误！");
+        } else if (month >= 5 && month <= 10) {
+            if (cabin == 0) {
+                price = price * 0.9;
+            } else if (cabin == 1) {
+                price = price * 0.85;
+            } else {
+                System.out.println("您输入的舱位有误！");
+            }
+        } else {
+            if (cabin == 0) {
+                price = price * 0.7;
+            } else if (cabin == 1) {
+                price = price * 0.65;
+            } else {
+                System.out.println("您输入的舱位有误！");
+            }
+        }
+        System.out.println(price);
+    }
+}
+
+```
+
+**四、**  
+
+前四位为字母最后一位为数字的五位随机验证码  
+
+```java
+import java.util.Random;//前四位为字母最后一位为数字的五位随机验证码
+
+public class class14 {
+    public static void main(String[] args) {
+        ma();
+    }
+
+    public static void ma() {
+        Random r = new Random();
+        String st = "";
+        for (int i = 1; i <= 5; i++) {
+            if (i < 5) {
+                int a = r.nextInt(58) + 65;
+                st = st + (char) a;
+            } else {
+                int b = r.nextInt(10);
+                st = st + b;
+            }
+        }
+        System.out.println(st);
+    }
+}
+```  
+
+**五、**  
+
+去除最高分及最低分算平均分  
+
+```java
+import java.util.Scanner;//去除最高分及最低分算平均分
+
+public class class15 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] arr = new int[6];
+        for (int i = 0; i < arr.length; ) {
+            System.out.println("请输入评委的打分：");
+            int score = sc.nextInt();
+            if (score >= 0 && score <= 100) {
+                arr[i] = score;
+                i++;
+            } else {
+                System.out.println("成绩超出了范围，请重新输入！");
+            }
+        }
+        int arrMax = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > arr[i - 1]) {
+                arrMax = arr[i];
+            }
+        }
+        int arrMin = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < arr[i - 1]) {
+                arrMin = arr[i];
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum = sum + arr[i];
+        }
+        sum = sum - arrMax - arrMin;
+        int avg = sum / arr.length - 2;
+        System.out.println("最终成绩为：" + avg);
+    }
+}
+```  
+
+**六、**  
+
+数字加密,将每一位数字加5对十取余后反转  
+
+```java
+import java.util.Scanner;//数字加密,将每一位数字加5对十取余后反转
+
+public class class16 {
+
+    public static void main(String[] args) {
+        int password = passWord();
+        int[] arr = num(password);
+        int[] brr = jiaMi(arr);
+        for (int i = 0; i < brr.length; i++) {
+            System.out.print(brr[i]);
+        }
+    }
+
+    public static int[] num(int password) {
+        int temp = password;
+        int count = 0;
+        for (int i = 0; temp != 0; i++) {
+            temp = temp / 10;
+            count++;
+        }
+        int[] arr = new int[count];
+        for (int i = 0; i < arr.length; i++) {
+            int ge = password % 10;
+            password = password / 10;
+            arr[i] = ge;
+        }
+        return arr;
+    }
+
+    public static int[] jiaMi(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (arr[i] + 5) % 10;
+        }
+        int[] brr = new int[arr.length];
+        for (int i = 0; i < brr.length; i++) {
+            brr[i] = arr[i];
+        }
+        return brr;
+    }
+
+    public static int passWord() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入密码：");
+        int password = sc.nextInt();
+        return password;
+    }
+}
+```  
+
+**七、**  
+
+双色球  
+
+![Alt text](<屏幕截图 2023-11-06 232151.png>)
+
+```java
+import java.util.Random;//双色球
+import java.util.Scanner;
+
+public class class11 {
+    public static void main(String[] args) {
+        int[] arrRed = new int[33];
+        int[] arrBlue = new int[16];
+        int[] gotArrRed = new int[6];
+        int[] gotArrBlue = new int[1];
+        int[] awardRed = new int[6];
+        int[] awardBlue = new int[1];
+        fullArr(arrRed);
+        fullArr(arrBlue);
+        intNumRed(gotArrRed);
+        intNumBlue(gotArrBlue);
+        getNumRed(awardRed, arrRed);
+        getNumBlue(awardBlue, arrBlue);
+        /*getArr(awardRed);//
+        System.out.println();
+        getArr(awardBlue);//*/
+        int countRed = compareRed(gotArrRed, awardRed);
+        int countBlue = compareBlue(gotArrBlue, awardBlue);
+        award(countRed,countBlue);
+    }
+
+    public static void fullArr(int[] arr) {
+        int num = 1;
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = num;
+            num++;
+        }
+    }
+
+    public static void getNumRed(int[] arr, int[] arrRed) {
+        fullArr(arrRed);
+        Random r = new Random();
+        for (int i = 0; i < arr.length; i++) {
+            int num = r.nextInt(arrRed.length);
+            int temp = arrRed[num];
+            arr[i] = temp;
+        }
+    }
+
+    public static void getNumBlue(int[] arr, int[] arrBlue) {
+        fullArr(arrBlue);
+        Random r = new Random();
+        for (int i = 0; i < arr.length; i++) {
+            int num = r.nextInt(arrBlue.length);
+            int temp = arrBlue[num];
+            arr[i] = temp;
+        }
+    }
+
+    public static void intNumRed(int[] arrRed) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入红色球的号码");
+        for (int i = 0; i < arrRed.length; ) {
+            int num = sc.nextInt();
+            if (num >= 0 && num <= 33) {
+                arrRed[i] = num;
+                i++;
+            } else {
+                System.out.println("您输入的号码有误");
+            }
+        }
+    }
+
+    public static void intNumBlue(int[] arrBlue) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入蓝色球的号码");
+        for (int i = 0; i < arrBlue.length; ) {
+            int num = sc.nextInt();
+            if (num >= 0 && num <= 16) {
+                arrBlue[i] = num;
+                i++;
+            } else {
+                System.out.println("您输入的号码有误");
+            }
+        }
+    }
+
+    public static int compareRed(int[] arrRed, int[] awardRed) {
+        int count = 0;
+        for (int i = 0; i < arrRed.length; i++) {
+            for (int j = 0; j < awardRed.length; j++) {
+                if (arrRed[i] == awardRed[j]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static int compareBlue(int[] arrBlue, int[] awardBlue) {
+        int count = 0;
+        for (int i = 0; i < arrBlue.length; i++) {
+            for (int j = 0; j < awardBlue.length; j++) {
+                if (arrBlue[i] == awardBlue[j]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static void award(int countRed, int countBlue) {
+        if ((countRed == 0 && countBlue == 1) || (countRed == 1 && countBlue == 1)) {
+            System.out.println("恭喜您中了六等奖");
+        } else if ((countRed == 2 && countBlue == 1) || (countRed == 3 && countBlue == 1)) {
+            System.out.println("恭喜您中了五等奖");
+        } else if ((countRed == 4 && countBlue == 0) || (countRed == 4 && countBlue == 1) || (countRed == 5 && countBlue == 0)) {
+            System.out.println("恭喜您中了四等奖");
+        } else if (countRed == 5 && countBlue == 1) {
+            System.out.println("恭喜您中了三等奖");
+        } else if (countRed == 6 && countBlue == 0) {
+            System.out.println("恭喜您中了二等奖");
+        } else if (countRed == 6 && countBlue == 1) {
+            System.out.println("恭喜您中了一等奖");
+        } else {
+            System.out.println("很遗憾，您未中奖！");
+        }
+    }
+
+    public static void getArr(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+    }
+}
+```
+
+## 面向对象  
+
+### 类和对象
+
+#### 类和对象的理解
+
+客观存在的事物皆为对象 ，所以我们也常常说万物皆对象。
+
+* 类
+  * 类的理解
+    * 类是对现实生活中一类具有共同属性和行为的事物的抽象
+    * 类是对象的数据类型，类是具有相同属性和行为的一组对象的集合
+    * 简单理解：类就是对现实事物的一种描述
+  * 类的组成
+    * 属性：指事物的特征，例如：手机事物（品牌，价格，尺寸）
+    * 行为：指事物能执行的操作，例如：手机事物（打电话，发短信）
+* 类和对象的关系
+  * 类：类是对现实生活中一类具有共同属性和行为的事物的抽象
+  * 对象：是能够看得到摸的着的真实存在的实体
+  * 简单理解：**类是对事物的一种描述，对象则为具体存在的事物**
+
+#### 类的定义
+
+类的组成是由属性和行为两部分组成
+
+* 属性：在类中通过`成员变量`来体现（类中方法外的变量）
+* 行为：在类中通过`成员方法`来体现（和前面的方法相比去掉static关键字即可）
+
+类的定义步骤：
+
+①定义类
+
+②编写类的成员变量
+
+③编写类的成员方法
+
+```java
+public class 类名 {
+	// 成员变量
+	变量1的数据类型 变量1；
+	变量2的数据类型 变量2;
+	…
+	// 成员方法
+	方法1;
+	方法2;	
+}
+```
+
+示例代码：
+
+```java
+/*
+    手机类：
+        类名：
+        手机(Phone)
+
+        成员变量：
+        品牌(brand)
+        价格(price)
+
+        成员方法：
+        打电话(call)
+        发短信(sendMessage)
+ */
+public class Phone {
+    //成员变量
+    String brand;
+    int price;
+
+    //成员方法
+    public void call() {
+        System.out.println("打电话");
+    }
+
+    public void sendMessage() {
+        System.out.println("发短信");
+    }
+}
+
+```
+
+#### 对象的使用
+
+* 创建对象的格式：
+  * 类名 对象名 = new 类名();
+* 调用成员的格式：
+  * 对象名.成员变量
+  * 对象名.成员方法();
+* 示例代码
+
+```java
+/*
+    创建对象
+        格式：类名 对象名 = new 类名();
+        范例：Phone p = new Phone();
+
+    使用对象
+        1：使用成员变量
+            格式：对象名.变量名
+            范例：p.brand
+        2：使用成员方法
+            格式：对象名.方法名()
+            范例：p.call()
+ */
+public class PhoneDemo {
+    public static void main(String[] args) {
+        //创建对象
+        Phone p = new Phone();
+
+        //使用成员变量
+        System.out.println(p.brand);
+        System.out.println(p.price);
+
+        p.brand = "小米";
+        p.price = 2999;
+
+        System.out.println(p.brand);
+        System.out.println(p.price);
+
+        //使用成员方法
+        p.call();
+        p.sendMessage();
+    }
+}
+```
