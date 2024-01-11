@@ -1,8 +1,8 @@
 # NOTE  
 
-## 预科  
+## 自学  
 
-[俄语](RUSSIAN/readme.md)  
+[英语](English/readme.md)  
 [Java](Java/readme.md)  
  
 ## 大一  
