@@ -3019,6 +3019,12 @@ sout(this.age);//输出method（001）空间内的age，由于该空间内的age
 
   ​ 以“”方式给出的字符串，只要字符序列相同(顺序和大小写)，无论在程序代码中出现几次，JVM 都只会建立一个 String 对象，并在字符串池中维护
 
+> 注意  
+>
+> 若是通过构造方法创建的字符串对象的内容在字符串池中存在则会返回串池中的实例，并在堆内存中再创建一个对象；若在串池中不存在，则会在串池中和堆内存中各创建一个对象，共两个对象，二者地址值不相同
+>
+> 字符串池在常量池中，常量池在堆内存中
+
 ## 字符串的比较
 
 ### "=="号的作用
@@ -3033,6 +3039,8 @@ sout(this.age);//输出method（001）空间内的age，由于该空间内的age
   ```java
   public boolean equals(String s)     比较两个字符串内容是否相同、区分大小写
   ```
+
+> String中的equals是经过重写的比较的是字符串的内容(有关方法的重写会在后文“继承-@Override 重写注解”中提到)
 
 - 示例代码
 
@@ -5273,9 +5281,8 @@ public class MathDemo01 {
 
 #  System 类
 
-##  常见方法
+##  常见方法  
 
-> tips：重点讲解内容
 
 **常见方法介绍**
 
@@ -5670,7 +5677,6 @@ public class RunTimeDemo1 {
 
 ## 概述
 
-> tips：重点讲解内容
 
 查看 API 文档，我们可以看到 API 文档中关于 Object 类的定义如下：
 
@@ -5686,7 +5692,6 @@ Object 类所在包是 java.lang 包。Object 是类层次结构的根，每个�
 
 ## 常见方法
 
-> tips：重点讲解内容
 
 **常见方法介绍**
 
@@ -6018,7 +6023,7 @@ import java.util.StringJoiner;
 //Cloneable
 //如果一个接口里面没有抽象方法
 //表示当前的接口是一个标记性接口
-//现在Cloneable表示一旦实现了，那么当前类的对象就可以被克降
+//现在Cloneable表示一旦实现了，那么当前类的对象就可以被克隆
 //如果没有实现，当前类的对象就不能克隆
 public class User implements Cloneable {
     private int id;
@@ -6170,9 +6175,7 @@ public class User implements Cloneable {
 
 # Objects 类
 
-## 概述
-
-> tips：了解内容
+## 概述  
 
 查看 API 文档，我们可以看到 API 文档中关于 Objects 类的定义如下：
 
@@ -6190,7 +6193,6 @@ Objects 类提供了一些对象常见操作的方法。比如判断对象是否
 
 ## 常见方法
 
-> tips：重点讲解内容
 
 **常见方法介绍**
 
@@ -6201,7 +6203,12 @@ public static String toString(Object o) 					// 获取对象的字符串表现�
 public static boolean equals(Object a, Object b)			// 比较两个对象是否相等
 public static boolean isNull(Object obj)					// 判断对象是否为null
 public static boolean nonNull(Object obj)					// 判断对象是否不为null
-```
+```  
+
+> 注意  
+>
+> 与object中的equals不同的是，objects.equals会先对比较内容进行非空判断，再进行比较
+> 因为equals进行比较时，若比较对像中含有空体，则会报错，二者若未经重写均用"=="比较  
 
 我们要了解的 Objects 类中的常见方法如下所示：
 
@@ -6455,7 +6462,7 @@ public class BigIntegerDemo1 {
         /* Random r=new Random();
             for (int i = e; i < 100; i++) {
             BigInteger bd1 = new BigInteger(4,r);
-            System.out.println(bd1);//[@ ~ 15]}
+            System.out.println(bd1);//[0 ~ 15]}
             }
         */
 
@@ -6846,8 +6853,8 @@ public class Demo {
 
 - 语法示例：
 ```
-1. \[abc\]：代表a或者b，或者c字符中的一个。
-2. \[^abc\]：代表除a,b,c以外的任何字符。
+1. [abc]：代表a或者b，或者c字符中的一个。
+2. [^abc]：代表除a,b,c以外的任何字符。
 3. [a-z]：代表a-z的所有小写字符中的一个。
 4. [A-Z]：代表A-Z的所有大写字符中的一个。
 5. [0-9]：代表0-9之间的某一个数字字符。
@@ -6973,14 +6980,14 @@ public class RegexDemo3 {
 ## 正则表达式-预定义字符
 
 ```
-- 语法示例：
+  语法示例：
   1. "." ： 匹配任何字符。
   2. "\d"：任何数字[0-9]的简写；
   3. "\D"：任何非数字\[^0-9\]的简写；
   4. "\s"： 空白字符：[ \t\n\x0B\f\r] 的简写
-  5. "\S"： 非空白字符：\[^\s\] 的简写
+  5. "\S"： 非空白字符：[^\s] 的简写
   6. "\w"：单词字符：[a-zA-Z_0-9]的简写
-  7. "\W"：非单词字符：\[^\w\]
+  7. "\W"：非单词字符：[^\w]
 ```  
 
 - 代码示例：
@@ -7661,6 +7668,12 @@ String regex = "a((?i)b)c";
 ## 非捕获分组
 
 非捕获分组：分组之后不需要再用本组数据，仅仅是把数据括起来。
+
+|符号|含义|举例|
+|----|----|----|
+|(? : 正则)|获取所有|Java(?:8|11|17)|
+|(? = 正则)|获取前面部分|Java(?=8|11|17)|
+|(? ! 正则)|获取不是指定内容的前面部分| Java(?!8|11|17) |
 
 ```java
 //身份证号码的简易正则表达式
