@@ -2,6 +2,7 @@
 
 ## 自学  
 
+[text](笔记/算法.md)
 [英语](English/readme.md)  
 [Java](Java/readme.md)   
 [计算机基础学习](计算机基础学习/readme.md) 
